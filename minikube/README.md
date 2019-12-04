@@ -36,21 +36,28 @@ $ watch kubectl get pods --all-namespaces
 3. Copy over minio server access and secret key to default namespace
 
 ```bash
-kubectl get secrets -n rook-minio --export -o yaml minio-my-store-access-keys | kubectl apply --namespace=default -f -
+$ kubectl get secrets -n rook-minio --export -o yaml minio-my-store-access-keys | kubectl apply --namespace=default -f -
 ```
 
 4. Deploy the Emptybox API service
 
 ```bash
-kubectl apply -f emptybox-api.yaml
+$ kubectl apply -f emptybox-api.yaml
 ```
 
-After one emptybox-api pods is running, you can initialize the bucket using this
-command.
+After one emptybox-api pod is running, get the pod name and run `flask init_bucket`
+inside that pod to initialize the bucket.
 
 ```bash
-kubectl exec -it $podname flask init_bucket
+$ kubectl get pods -l app=upload
+NAME                           READY   STATUS    RESTARTS   AGE
+emptybox-api-xxxxxxxxx-xxxxx   1/1     Running   0          15s
+emptybox-api-xxxxxxxxx-yyyyy   1/1     Running   0          15s
+emptybox-api-xxxxxxxxx-zzzzz   1/1     Running   0          15s
+$ kubectl exec -it emptybox-api-xxxxxxxxx-xxxxx flask init_bucket
 ```
+
+Or this fancier oneliner `kubectl exec -it deployments/emptybox-api flask init_bucket`
 
 5. You can list the exposed service on minikube by running
 
