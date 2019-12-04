@@ -15,11 +15,11 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      app: api
+      app: upload
   template:
     metadata:
       labels:
-        app: api
+        app: upload
     spec:
       containers:
       - name: api
@@ -59,7 +59,7 @@ metadata:
   name: emptybox-api
 spec:
   selector:
-    app: api
+    app: upload
   ports:
   - protocol: TCP
     port: 80
