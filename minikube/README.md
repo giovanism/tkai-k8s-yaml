@@ -59,7 +59,13 @@ $ kubectl exec -it emptybox-api-xxxxxxxxx-xxxxx flask init_bucket
 
 Or this fancier oneliner `kubectl exec -it deployments/emptybox-api flask init_bucket`
 
-5. You can list the exposed service on minikube by running
+5. Deploy the Image Processing API service
+
+```bash
+$ kubectl apply -f image-processing.yaml
+```
+
+6. You can list the exposed service on minikube by running
 
 ```bash
 $ minikube service list
