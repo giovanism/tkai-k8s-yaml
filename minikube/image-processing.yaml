@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: image-processing
+data:
+  upload_host: emptybox-api.default.svc.cluster.local
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-processing
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: image-processing
+  template:
+    metadata:
+      labels:
+        app: image-processing
+    spec:
+      containers:
+      - name: api
+        image: giovanism/image-processing:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: IMAGE_PROCESSOR_UPLOAD_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: image-processing
+              key: upload_host
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: image-processing
+spec:
+  selector:
+    app: image-processing
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
