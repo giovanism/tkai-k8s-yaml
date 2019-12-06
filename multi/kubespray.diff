@@ -1,0 +1,27 @@
+diff --git a/Vagrantfile b/Vagrantfile
+index a392af54..0f824b7f 100644
+--- a/Vagrantfile
++++ b/Vagrantfile
+@@ -53,7 +53,7 @@ $kube_node_instances_with_disks_size = "20G"
+ $kube_node_instances_with_disks_number = 2
+ $override_disk_size = false
+ $disk_size = "20GB"
+-$local_path_provisioner_enabled = false
++$local_path_provisioner_enabled = true
+ $local_path_provisioner_claim_root = "/opt/local-path-provisioner/"
+ 
+ $playbook = "cluster.yml"
+diff --git a/inventory/sample/group_vars/k8s-cluster/k8s-cluster.yml b/inventory/sample/group_vars/k8s-cluster/k8s-cluster.yml
+index 77aca083..ba799098 100644
+--- a/inventory/sample/group_vars/k8s-cluster/k8s-cluster.yml
++++ b/inventory/sample/group_vars/k8s-cluster/k8s-cluster.yml
+@@ -158,6 +158,9 @@ dns_domain: "{{ cluster_name }}"
+ ## docker for docker, crio for cri-o and containerd for containerd.
+ container_manager: docker
+ 
++## docker options
++docker_options: "--insecure-registry=172.17.8.1:5000 --insecure-registry={{ kube_service_addresses }} --data-root={{ docker_daemon_graph }} {{ docker_log_opts }}"
++
+ ## Settings for containerized control plane (etcd/kubelet/secrets)
+ etcd_deployment_type: docker
+ kubelet_deployment_type: host
