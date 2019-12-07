@@ -21,12 +21,12 @@ spec:
           - name: IMAGE_PROCESSOR_UPLOAD_HOST
             valueFrom:
               configMapKeyRef:
-                name: api_host
+                name: emptybox-api
                 key: upload
           - name: IMAGE_PROCESSOR_TRANSFORM_HOST
             valueFrom:
               configMapKeyRef:
-                name: api_host
+                name: emptybox-api
                 key: processor
           resources:
             requests:
