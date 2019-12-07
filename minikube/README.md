@@ -8,6 +8,8 @@ Basic minikube deployment
 - minikube
 - kubectl
 
+This is tested on minikube version 1.5.2 which comes with its own storage provisioner.
+
 ## Setup
 
 1. Make a new Kubernetes instance using minikube
