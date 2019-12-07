@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: emptybox-api
+  name: emptybox-client
 data:
   api_host: emptybox-api.default.svc.cluster.local
 ---
@@ -25,10 +25,15 @@ spec:
           ports:
           - containerPort: 3000
           env:
-          - name: API_HOST
+          - name: IMAGE_PROCESSOR_UPLOAD_HOST
             valueFrom:
               configMapKeyRef:
                 name: emptybox-api
+                key: site
+          - name: IMAGE_PROCESSOR_TRANSFORM_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: image-processing
                 key: site
           resources:
             requests:
