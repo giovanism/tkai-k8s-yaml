@@ -11,6 +11,19 @@ index a392af54..0f824b7f 100644
  $local_path_provisioner_claim_root = "/opt/local-path-provisioner/"
  
  $playbook = "cluster.yml"
+diff --git a/inventory/sample/group_vars/k8s-cluster/addons.yml b/inventory/sample/group_vars/k8s-cluster/addons.yml
+index 97390f3b..306cf156 100644
+--- a/inventory/sample/group_vars/k8s-cluster/addons.yml
++++ b/inventory/sample/group_vars/k8s-cluster/addons.yml
+@@ -13,7 +13,7 @@ registry_enabled: false
+ # registry_disk_size: "10Gi"
+ 
+ # Metrics Server deployment
+-metrics_server_enabled: false
++metrics_server_enabled: true
+ # metrics_server_kubelet_insecure_tls: true
+ # metrics_server_metric_resolution: 60s
+ # metrics_server_kubelet_preferred_address_types: "InternalIP"
 diff --git a/inventory/sample/group_vars/k8s-cluster/k8s-cluster.yml b/inventory/sample/group_vars/k8s-cluster/k8s-cluster.yml
 index 77aca083..ba799098 100644
 --- a/inventory/sample/group_vars/k8s-cluster/k8s-cluster.yml
