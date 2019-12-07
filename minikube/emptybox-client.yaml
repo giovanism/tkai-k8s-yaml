@@ -1,9 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: emptybox-client
+  name: api_host
 data:
-  api_host: emptybox-api.default.svc.cluster.local
+  upload: emptybox-api.default.svc.cluster.local
+  processor: image-processing.default.svc.cluster.local
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -28,13 +29,13 @@ spec:
           - name: IMAGE_PROCESSOR_UPLOAD_HOST
             valueFrom:
               configMapKeyRef:
-                name: emptybox-api
-                key: site
+                name: api_host
+                key: upload
           - name: IMAGE_PROCESSOR_TRANSFORM_HOST
             valueFrom:
               configMapKeyRef:
-                name: image-processing
-                key: site
+                name: api_host
+                key: processor
           resources:
             requests:
               memory: 256Mi
