@@ -28,6 +28,16 @@ spec:
               configMapKeyRef:
                 name: emptybox-api
                 key: processor
+          - name: EMPTYBOX_S3_SITE
+            valueFrom:
+              configMapKeyRef:
+                name: emptybox-api
+                key: s3_site
+          - name: EMPTYBOX_S3_BUCKET
+            valueFrom:
+              configMapKeyRef:
+                name: emptybox-api
+                key: s3_bucket
           - name: DEBUG_MODE
             value: "1"
           resources:

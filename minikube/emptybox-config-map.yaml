@@ -8,3 +8,5 @@ data:
   s3_bucket: emptybox
   upload: emptybox-api.default.svc.cluster.local
   processor: image-processing.default.svc.cluster.local
+  # Change this pls
+  s3_site: http://192.168.39.5:32224/
