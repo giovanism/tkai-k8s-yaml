@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: emptybox-api
+data:
+  api_host: emptybox-api.default.svc.cluster.local
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emptybox-client
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: emptybox-client
+  template:
+    metadata:
+      labels:
+        app: emptybox-client
+    spec:
+      containers:
+        - name: emptybox-client
+          image: ciferivalle/emptybox-client:v1
+          ports:
+          - containerPort: 3000
+          env:
+          - name: API_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: emptybox-api
+                key: site
+          resources:
+            requests:
+              memory: 256Mi
+            limits:
+              memory: 512Mi
+          env:
+            - name: DEBUG_MODE
+              value: "1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emptybox-client
+spec:
+  selector:
+    app: emptybox-client
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  type: NodePort
