@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: emptybox-api
+data:
+  site: https://catbox.moe/
+  s3_host: my-store.rook-minio.svc.cluster.local:9000
+  s3_bucket: emptybox
+  upload: emptybox-api.default.svc.cluster.local
+  processor: image-processing.default.svc.cluster.local
