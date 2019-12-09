@@ -30,10 +30,6 @@ spec:
             configMapKeyRef:
               name: image-processing
               key: upload_host
-        resources:
-          requests:
-            cpu: 15m
-            memory: 50Mi
 ---
 apiVersion: v1
 kind: Service

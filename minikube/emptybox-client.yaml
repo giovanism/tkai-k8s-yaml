@@ -40,12 +40,6 @@ spec:
                 key: s3_bucket
           - name: DEBUG_MODE
             value: "1"
-          resources:
-            requests:
-              cpu: 3m
-              memory: 70Mi
-            limits:
-              memory: 512Mi
 ---
 apiVersion: v1
 kind: Service
