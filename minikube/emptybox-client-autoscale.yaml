@@ -41,11 +41,9 @@ spec:
             value: "1"
           resources:
             requests:
-              cpu: 20m
-              memory: 128Mi
+              cpu: 64m
             limits:
-              cpu: 50m
-              memory: 128Mi
+              cpu: 100m
 ---
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
@@ -63,12 +61,6 @@ spec:
   - type: Resource
     resource:
       name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 80
-  - type: Resource
-    resource:
-      name: memory
       target:
         type: Utilization
         averageUtilization: 80
