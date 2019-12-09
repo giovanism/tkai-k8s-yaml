@@ -42,7 +42,8 @@ spec:
             value: "1"
           resources:
             requests:
-              memory: 256Mi
+              cpu: 3m
+              memory: 70Mi
             limits:
               memory: 512Mi
 ---

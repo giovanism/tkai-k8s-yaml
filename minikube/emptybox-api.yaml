@@ -43,6 +43,10 @@ spec:
             secretKeyRef:
               name: minio-my-store-access-keys
               key: password
+        resources:
+          requests:
+            cpu: 2m
+            memory: 50Mi
 ---
 apiVersion: v1
 kind: Service
