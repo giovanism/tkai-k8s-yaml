@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emptybox-client
+spec:
+  selector:
+    matchLabels:
+      app: emptybox-client
+  template:
+    metadata:
+      labels:
+        app: emptybox-client
+    spec:
+      containers:
+        - name: emptybox-client
+          image: ciferivalle/emptybox-client:v1
+          ports:
+          - containerPort: 3000
+          env:
+          - name: IMAGE_PROCESSOR_UPLOAD_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: emptybox-api
+                key: upload
+          - name: IMAGE_PROCESSOR_TRANSFORM_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: emptybox-api
+                key: processor
+          - name: EMPTYBOX_S3_SITE
+            valueFrom:
+              configMapKeyRef:
+                name: emptybox-api
+                key: s3_site
+          - name: EMPTYBOX_S3_BUCKET
+            valueFrom:
+              configMapKeyRef:
+                name: emptybox-api
+                key: s3_bucket
+          - name: DEBUG_MODE
+            value: "1"
+          resources:
+            requests:
+              cpu: 4m
+              memory: 128Mi
+            limits:
+              cpu: 15m
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emptybox-client
+spec:
+  selector:
+    app: emptybox-client
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  type: NodePort

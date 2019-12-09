@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emptybox-api
+spec:
+  selector:
+    matchLabels:
+      app: upload
+  template:
+    metadata:
+      labels:
+        app: upload
+    spec:
+      containers:
+      - name: api
+        image: giovanism/emptybox:flask-dev
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MAIN_SITE
+          valueFrom:
+            configMapKeyRef:
+              name: emptybox-api
+              key: site
+        - name: EMPTYBOX_S3_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: emptybox-api
+              key: s3_host
+        - name: EMPTYBOX_S3_BUCKET
+          valueFrom:
+            configMapKeyRef:
+              name: emptybox-api
+              key: s3_bucket
+        - name: EMPTYBOX_S3_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: minio-my-store-access-keys
+              key: username
+        - name: EMPTYBOX_S3_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: minio-my-store-access-keys
+              key: password
+        resources:
+          requests:
+            cpu: 3m
+            memory: 64Mi
+          limits:
+            cpu: 10m
+            memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emptybox-api
+spec:
+  selector:
+    app: upload
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
