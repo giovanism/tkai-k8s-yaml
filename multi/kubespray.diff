@@ -1,7 +1,28 @@
 diff --git a/Vagrantfile b/Vagrantfile
-index a392af54..0f824b7f 100644
+index a392af54..16691398 100644
 --- a/Vagrantfile
 +++ b/Vagrantfile
+@@ -32,7 +32,7 @@ SUPPORTED_OS = {
+ $num_instances = 3
+ $instance_name_prefix = "k8s"
+ $vm_gui = false
+-$vm_memory = 2048
++$vm_memory = 4096
+ $vm_cpus = 1
+ $shared_folders = {}
+ $forwarded_ports = {}
+@@ -42,9 +42,9 @@ $network_plugin = "flannel"
+ # Setting multi_networking to true will install Multus: https://github.com/intel/multus-cni
+ $multi_networking = false
+ # The first three nodes are etcd servers
+-$etcd_instances = $num_instances
++$etcd_instances = 1
+ # The first two nodes are kube masters
+-$kube_master_instances = $num_instances == 1 ? $num_instances : ($num_instances - 1)
++$kube_master_instances = 1
+ # All nodes are kube nodes
+ $kube_node_instances = $num_instances
+ # The following only works when using the libvirt provider
 @@ -53,7 +53,7 @@ $kube_node_instances_with_disks_size = "20G"
  $kube_node_instances_with_disks_number = 2
  $override_disk_size = false
